@@ -13,8 +13,18 @@ if (!city) {
     cityName.textContent=city;
     async function fetchWeather(cityName) {
         try {
-            let response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}`)
+            const geoRes = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`)
             
+        console.log(geoRes);
+
+        if(!geoRes.ok)throw new Error("Geo API failed");
+        const geoData =await geoRes.json();
+        console.log(geoData);
+        let {lat,lon}= geoData[0];
+        console.log(lat,lon);
+        
+        
+        
         } catch (error) {
             console.log(error,"Error in fetching Weather details");
             loading.classList.add("hidden");
